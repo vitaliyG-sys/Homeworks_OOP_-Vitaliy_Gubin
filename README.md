@@ -18,3 +18,63 @@ https://github.com/vitaliyG-sys/Homeworks_OOP_-Vitaliy_Gubin.git
 
 ### модуль main.py
 
+
+
+### модуль category.py
+
+1. class Category: Представляет категорию товаров.
+
+2. Генератор init_json_to_category: Генератор для инициализации класса Category.
+
+### модуль product.py
+
+1. class Product: Представляет продукт из категории товаров.
+
+2. Генератор init_json_to_product: Генератор для инициализации класса Product.
+
+### модуль read_files.py
+
+1. Функция get_json_file: Принимает на вход путь до JSON-файла и возвращает список словарей с данными о товарах.
+    Если файл пустой, содержит не список или не найден, функция возвращает пустой список.
+
+## Тестирование:
+
+Тестирование проводится с помощью фреймворка "Pytest".
+
+Для работы необходимо установить Pytest с помощью команды:
+
+```
+ poetry add --group dev pytest
+ ```
+
+Покрытие тестами составляет 100%
+
+Тесты находятся в пакете "tests"
+
+## Описание тестов:
+
+### модуль conftest.py
+
+1. Фикстура data_from_json: Возвращает список словарей с категориями товаров для тестов.
+
+2. Фикстура category_1: Инициализирует класс Category для тестов.
+
+3. Фикстура products_1: Инициализирует класс Products для тестов.
+
+### модуль test_category.py
+
+1. test_category: Проверяет работу класса Category.
+
+2. test_init_json_to_category: Проверяет работу init_json_to_category.
+
+### модуль test_product.py
+
+1. test_product: Функция для проверки работы класса Category.
+
+2. test_init_json_to_product: Проверяет работу init_json_to_product.
+
+### модуль test_read_files.py
+
+1. test_get_json_file_correct_data: Проверяет работу функции "get_json_file" с корректно введенными данными.
+
+2. test_get_json_file_not_found: Проверяет работу функции "get_json_file" с обработкой ошибки FileNotFoundError.
