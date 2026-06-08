@@ -29,22 +29,24 @@ class Category:
         self.description = description
         self.__products = products
         Category.category_count += 1
-        Category.product_count += len(self.products)
+        Category.product_count += len(self.__products)
 
     @property
-    def products(self) -> list:
+    def products(self) -> str:
         """Геттер, который будет выводить список товаров в виде строк в формате:
         Название продукта, (Стоимость) руб. Остаток: (Количество) шт."""
-        result = []
+        product_strings = []
+
         for product in self.__products:
-            result.append(f"{product.name}, {product.price} руб. Остаток: {product.quantity}")
-        return result
+            product_str = f"{product.name}, {product.price} руб. Остаток: {product.quantity} шт."
+            product_strings.append(product_str)
+        return "\n".join(product_strings)
 
     @products.setter
     def products(self, products: list) -> None:
         """Сеттер для установки списка товаров. Обновляет счётчик продуктов."""
         Category.product_count = 0
-        Category.product_count += len(products)
+        Category.product_count = len(self.__products)
         self.__products = [products]
 
     def add_product(self, product: Product) -> None:
