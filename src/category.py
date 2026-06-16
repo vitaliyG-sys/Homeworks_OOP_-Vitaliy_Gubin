@@ -45,7 +45,6 @@ class Category:
     @products.setter
     def products(self, products: list) -> None:
         """Сеттер для установки списка товаров. Обновляет счётчик продуктов."""
-        Category.product_count = 0
         Category.product_count = len(self.__products)
         self.__products = [products]
 
