@@ -1,3 +1,7 @@
+import gc
+from typing import Generator
+from unittest.mock import patch
+
 import pytest
 
 from src.category import Category
@@ -31,9 +35,35 @@ def data_from_json() -> list[dict]:
     ]
 
 
+@pytest.fixture(autouse=True)
+def cleanup_gc() -> None:
+    """Фикстура для очистки gc перед каждым тестом."""
+    gc.collect()
+
+
+@pytest.fixture
+def new_product_data() -> dict:
+    """Фикстура с данными для нового продукта."""
+    return {
+        "name": "Samsung Galaxy C23 Ultra",  # То же имя, что у существующего
+        "description": "Обновлённое описание",
+        "price": 190000.0,  # Выше существующей цены
+        "quantity": 3,
+    }
+
+
+@pytest.fixture
+def mock_get_json(data_from_json: list[dict]) -> Generator:
+    with patch("src.category.get_json_file") as mock:
+        mock.return_value = data_from_json
+        yield mock
+
+
 @pytest.fixture
 def category_1(data_from_json: list[dict]) -> Category:
-    return Category(data_from_json[0]["name"], data_from_json[0]["description"], data_from_json[0]["products"])
+    # Преобразуем словари продуктов в объекты Product
+    products = [Product(p["name"], p["description"], p["price"], p["quantity"]) for p in data_from_json[0]["products"]]
+    return Category(data_from_json[0]["name"], data_from_json[0]["description"], products)
 
 
 @pytest.fixture
