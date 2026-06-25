@@ -26,6 +26,16 @@ class Product:
         self.__price = price
         self.quantity = quantity
 
+
+    def __str__(self) -> str:
+        """ Метод для вывода информации о продукте в формате:
+            Название продукта, ХХ руб. Остаток: ХХ шт."""
+        return f"{self.name}, {self.__price} руб. Остаток: {self.quantity} шт."
+
+    def __add__(self, other) -> float:
+        """ Метод возвращает общую стоимость складываемых продуктов. """
+        return self.quantity * self.__price + other.quantity * other.__price
+
     @property
     def price(self) -> float:
         """Геттер атрибута price."""
