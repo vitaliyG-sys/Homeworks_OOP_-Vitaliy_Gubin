@@ -4,8 +4,16 @@ from unittest.mock import Mock, mock_open, patch
 from src.product import Product, init_json_to_product
 
 
+def test_product_str(product_1: Product) -> None:
+    """1. Функция для проверки работы магического метода __str__ класса Product."""
+    assert str(product_1) == 'Samsung Galaxy C23 Ultra, 180000.0 руб. Остаток: 5 шт.'
+
+def test_product_add(product_1: Product, product_2: Product) -> None:
+    """2. Функция для проверки работы магического метода __add__ класса Product."""
+    assert product_1 + product_2 == 1761000.0
+
 def test_product(product_1: Product) -> None:
-    """1. Функция для проверки работы класса Category."""
+    """3. Функция для проверки работы класса Category."""
     assert product_1.name == "Samsung Galaxy C23 Ultra"
     assert product_1.description == "256GB, Серый цвет, 200MP камера"
     assert product_1.price == 180000.0
@@ -13,7 +21,7 @@ def test_product(product_1: Product) -> None:
 
 
 def test_init_json_to_product(data_from_json: list[dict]) -> None:
-    """2. Проверяет работу init_json_to_product."""
+    """4. Проверяет работу init_json_to_product."""
     products_json = json.dumps(data_from_json)
     with patch("builtins.open", mock_open(read_data=products_json)):
         with patch("json.load") as mock_get_json:
@@ -44,19 +52,19 @@ def test_init_json_to_product(data_from_json: list[dict]) -> None:
 
 
 def test_product_verify_price_zero_price() -> None:
-    """Тест: проверка нулевой цены."""
+    """5. Проверка нулевой цены."""
     result = Product.verify_price(0.0)
     assert result is None
 
 
 def test_product_verify_price_negative_price() -> None:
-    """Тест: проверка отрицательной цены."""
+    """6. Проверка отрицательной цены."""
     result = Product.verify_price(-100.0)
     assert result is None
 
 
 def test_product_verify_price_positive_without_old_price() -> None:
-    """Тест: положительная цена без старой цены."""
+    """7. Положительная цена без старой цены."""
     new_price = 1000.0
     result = Product.verify_price(new_price)
     assert result == new_price
@@ -64,7 +72,7 @@ def test_product_verify_price_positive_without_old_price() -> None:
 
 #
 def test_product_verify_price_increase_price() -> None:
-    """Тест: повышение цены (новая цена больше старой)."""
+    """8. Повышение цены (новая цена больше старой)."""
     old_price = 1000.0
     new_price = 1500.0
     result = Product.verify_price(new_price, old_price)
@@ -73,7 +81,7 @@ def test_product_verify_price_increase_price() -> None:
 
 @patch("builtins.input", return_value="y")
 def test_product_verify_price_decrease_price_confirm(mock_input: Mock) -> None:
-    """Тест: понижение цены, пользователь подтверждает изменение."""
+    """9. Понижение цены, пользователь подтверждает изменение."""
     old_price = 1500.0
     new_price = 1000.0
     result = Product.verify_price(new_price, old_price)
@@ -83,7 +91,7 @@ def test_product_verify_price_decrease_price_confirm(mock_input: Mock) -> None:
 
 @patch("builtins.input", return_value="n")
 def test_product_verify_price_decrease_price_cancel(mock_input: Mock) -> None:
-    """Тест: понижение цены, пользователь отменяет изменение."""
+    """10. Понижение цены, пользователь отменяет изменение."""
     old_price = 1500.0
     new_price = 1000.0
     result = Product.verify_price(new_price, old_price)
@@ -93,7 +101,7 @@ def test_product_verify_price_decrease_price_cancel(mock_input: Mock) -> None:
 
 @patch("builtins.input", side_effect=["invalid", "y"])
 def test_product_verify_price_decrease_price_invalid_then_confirm(mock_input: Mock) -> None:
-    """Тест: понижение цены с некорректным вводом, затем подтверждение."""
+    """11. Понижение цены с некорректным вводом, затем подтверждение."""
     old_price = 1500.0
     new_price = 1000.0
     result = Product.verify_price(new_price, old_price)
@@ -103,7 +111,7 @@ def test_product_verify_price_decrease_price_invalid_then_confirm(mock_input: Mo
 
 @patch("builtins.input", side_effect=["invalid", "n"])
 def test_product_verify_price_decrease_price_invalid_then_cancel(mock_input: Mock) -> None:
-    """Тест: понижение цены с некорректным вводом, затем отмена."""
+    """12. Понижение цены с некорректным вводом, затем отмена."""
     old_price = 1500.0
     new_price = 1000.0
     result = Product.verify_price(new_price, old_price)
@@ -112,14 +120,14 @@ def test_product_verify_price_decrease_price_invalid_then_cancel(mock_input: Moc
 
 
 def test_product_verify_price_same_price() -> None:
-    """Тест: цена не изменилась."""
+    """13. Цена не изменилась."""
     price = 1000.0
     result = Product.verify_price(price, price)
     assert result == price
 
 
 def test_price_setter_with_valid_new_price(product_1: Product) -> None:
-    """Тест установки корректной новой цены."""
+    """14. Тест установки корректной новой цены."""
     initial_price = product_1.price
     new_price = 200000.0
     product_1.price = new_price
@@ -128,13 +136,13 @@ def test_price_setter_with_valid_new_price(product_1: Product) -> None:
 
 
 def test_price_setter_with_zero_price(product_1: Product) -> None:
-    """Тест установки нулевой цены."""
+    """15. Тест установки нулевой цены."""
     product_1.price = 0.0
     assert product_1.price == 180000.0
 
 
 def test_price_setter_with_negative_price(product_1: Product) -> None:
-    """Тест установки отрицательной цены (должна быть отклонена)."""
+    """16. Тест установки отрицательной цены (должна быть отклонена)."""
     initial_price = product_1.price
     negative_price = -5000.0
     product_1.price = negative_price
@@ -142,15 +150,14 @@ def test_price_setter_with_negative_price(product_1: Product) -> None:
     assert product_1.price == initial_price
 
 
-#
 def test_price_getter_returns_correct_value(product_1: Product) -> None:
-    """Тест геттера цены — возвращает корректное значение."""
+    """17. Тест геттера цены — возвращает корректное значение."""
     expected_price = 180000.0
     assert product_1.price == expected_price
 
 
 def test_price_setter_calls_verify_price(product_1: Product, mocker: Mock) -> None:
-    """Тест, что сеттер вызывает метод verify_price."""
+    """18. Тест, что сеттер вызывает метод verify_price."""
     mock_verify = mocker.patch.object(product_1, "verify_price")
     new_price = 150000.0
     product_1.price = new_price
@@ -158,7 +165,7 @@ def test_price_setter_calls_verify_price(product_1: Product, mocker: Mock) -> No
 
 
 def test_price_setter_no_change_when_verify_returns_none(product_1: Product, mocker: Mock) -> None:
-    """Тест: цена не меняется, если verify_price возвращает None."""
+    """19. Цена не меняется, если verify_price возвращает None."""
     mocker.patch.object(product_1, "verify_price", return_value=None)
     initial_price = product_1.price
     product_1.price = 99999.0
@@ -166,14 +173,14 @@ def test_price_setter_no_change_when_verify_returns_none(product_1: Product, moc
 
 
 def test_verify_products_no_existing_products() -> None:
-    """Тест: нет существующих продуктов с таким именем — данные не меняются."""
+    """20. Нет существующих продуктов с таким именем — данные не меняются."""
     test_data = {"name": "Cмартфон", "description": "Описание", "price": 50000.0, "quantity": 10}
     result = Product.verify_products(test_data)
     assert result == test_data
 
 
 def test_verify_products_existing_product_same_name() -> None:
-    """Тест: есть продукт с таким же именем — цена берётся максимальная, количество суммируется."""
+    """21. Есть продукт с таким же именем — цена берётся максимальная, количество суммируется."""
     # Создаём существующий продукт
     _ = Product("Смартфон X", "Старый смартфон", 45000.0, 5)
 
@@ -192,7 +199,7 @@ def test_verify_products_existing_product_same_name() -> None:
 
 
 def test_verify_products_existing_product_lower_price() -> None:
-    """Тест: существующий продукт с более высокой ценой — берётся существующая цена."""
+    """22. Существующий продукт с более высокой ценой — берётся существующая цена."""
     _ = Product("Смартфон Y", "Старый", 60000.0, 2)
 
     test_data = {
@@ -209,7 +216,7 @@ def test_verify_products_existing_product_lower_price() -> None:
 
 
 def test_new_product_creates_correct_instance(new_product_data: dict) -> None:
-    """Тест: new_product создаёт корректный экземпляр Product."""
+    """23. new_product создаёт корректный экземпляр Product."""
     product = Product.new_product(new_product_data)
     assert isinstance(product, Product)
     assert product.name == new_product_data["name"]
@@ -217,7 +224,7 @@ def test_new_product_creates_correct_instance(new_product_data: dict) -> None:
 
 
 def test_new_product_with_no_existing_products(new_product_data: dict) -> None:
-    """Тест: new_product без существующих продуктов — создаёт продукт с исходными данными."""
+    """24. new_product без существующих продуктов — создаёт продукт с исходными данными."""
     # Удаляем все существующие продукты из gc, если они есть
     import gc
 
