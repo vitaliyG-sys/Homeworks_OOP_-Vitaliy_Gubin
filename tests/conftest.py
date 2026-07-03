@@ -75,3 +75,57 @@ def product_1(data_from_json: list[dict]) -> Product:
         product_from_list["price"],
         product_from_list["quantity"],
     )
+
+@pytest.fixture
+def product_2(data_from_json: list[dict]) -> Product:
+    product_from_list = data_from_json[1]["products"][0]
+    return Product(
+        product_from_list["name"],
+        product_from_list["description"],
+        product_from_list["price"],
+        product_from_list["quantity"],
+    )
+
+@pytest.fixture
+def product_samsung() -> Product:
+    """Фикстура для товара Samsung."""
+    return Product(
+        name="Samsung Galaxy C23 Ultra",
+        description="256GB, Серый цвет",
+        price=180000.0,
+        quantity=5
+    )
+
+@pytest.fixture
+def product_iphone() -> Product:
+    """Фикстура для товара Iphone."""
+    return Product(
+        name="Iphone 15",
+        description="512GB, Gray space",
+        price=210000.0,
+        quantity=8
+    )
+
+@pytest.fixture
+def product_xiaomi() -> Product:
+    """Фикстура для товара Xiaomi."""
+    return Product(
+        name="Xiaomi Redmi Note 11",
+        description="1024GB, Синий",
+        price=31000.0,
+        quantity=14
+    )
+
+@pytest.fixture
+def category_with_products(product_samsung, product_iphone, product_xiaomi) -> Category:
+    """
+    Создает категорию, содержащую список объектов Product.
+    Геттер .products автоматически превратит их в строку вида:
+    "Samsung Galaxy C23 Ultra\nIphone 15\nXiaomi Redmi Note 11"
+    """
+    products_list = [product_samsung, product_iphone, product_xiaomi]
+    return Category(
+        name="Смартфоны",
+        description="Лучшие смартфоны",
+        products=products_list
+    )

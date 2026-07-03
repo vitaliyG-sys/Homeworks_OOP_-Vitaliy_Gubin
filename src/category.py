@@ -31,14 +31,20 @@ class Category:
         Category.category_count += 1
         Category.product_count += len(self.__products)
 
+    def __str__(self) -> str:
+        """Метод для вывода общего количества товаров в категории и списка товаров в формате:
+            Название категории, количество продуктов: Х шт."""
+        quantity_of_all_goods = sum(product.quantity for product in self.__products)
+        return f"{self.name}, количество продуктов: {quantity_of_all_goods}"
+
     @property
     def products(self) -> str:
         """Геттер, который будет выводить список товаров в виде строк в формате:
-        Название продукта, (Стоимость) руб. Остаток: (Количество) шт."""
+            Название продукта, (Стоимость) руб. Остаток: (Количество) шт."""
         product_strings = []
 
         for product in self.__products:
-            product_str = f"{product.name}, {product.price} руб. Остаток: {product.quantity} шт."
+            product_str = str(product)
             product_strings.append(product_str)
         return "\n".join(product_strings)
 
