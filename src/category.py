@@ -49,7 +49,8 @@ class Category:
         self.__products = [products]
 
     def add_product(self, product: Product) -> None:
-        """Метод для добавления товаров в категорию. Обновляет счётчик продуктов."""
+        """Метод для добавления товаров в категорию. Обновляет счётчик продуктов.
+        Исключает возможность добавления других типов данных."""
         if isinstance(product, Product):
             self.__products.append(product)
             Category.product_count += 1
