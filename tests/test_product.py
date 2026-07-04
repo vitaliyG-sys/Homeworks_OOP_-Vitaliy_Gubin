@@ -1,7 +1,11 @@
 import json
 from unittest.mock import Mock, mock_open, patch
 
+import pytest
+
 from src.product import Product, init_json_to_product
+from src.products.smartphone import Smartphone
+from src.products.lawngrass import LawnGrass
 
 
 def test_product_str(product_1: Product) -> None:
@@ -11,6 +15,12 @@ def test_product_str(product_1: Product) -> None:
 def test_product_add(product_1: Product, product_2: Product) -> None:
     """2. Функция для проверки работы магического метода __add__ класса Product."""
     assert product_1 + product_2 == 1761000.0
+
+
+def test_product_add_type_error(smartphone_1: Smartphone, lawngrass_1: LawnGrass)-> None:
+    """1.1. Функция для проверки работы магического метода __str__ класса Product ошибка TypeError"""
+    with pytest.raises(TypeError):
+        smartphone_1 + lawngrass_1
 
 def test_product(product_1: Product) -> None:
     """3. Функция для проверки работы класса Category."""
