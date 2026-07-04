@@ -8,11 +8,6 @@ from src.read_files import get_json_file
 class Product:
     """Представляет продукт из категории товаров."""
 
-    name: str
-    description: str
-    price: float
-    quantity: int
-
     def __init__(self, name: str, description: str, price: float, quantity: int) -> None:
         """Инициализирует продукт из категории товаров.
         Args:
@@ -26,15 +21,18 @@ class Product:
         self.__price = price
         self.quantity = quantity
 
-
     def __str__(self) -> str:
-        """ Метод для вывода информации о продукте в формате:
-            Название продукта, ХХ руб. Остаток: ХХ шт."""
+        """Метод для вывода информации о продукте в формате:
+        Название продукта, ХХ руб. Остаток: ХХ шт."""
         return f"{self.name}, {self.__price} руб. Остаток: {self.quantity} шт."
 
     def __add__(self, other) -> float:
-        """ Метод возвращает общую стоимость складываемых продуктов. """
-        return self.quantity * self.__price + other.quantity * other.__price
+        """Метод возвращает общую стоимость складываемых продуктов."""
+        # Проверка принадлежности к классу добавляемого продукта. Должны совпадать.
+        if type(other) is type(self):
+            return self.quantity * self.__price + other.quantity * other.__price
+        else:
+            raise TypeError
 
     @property
     def price(self) -> float:
