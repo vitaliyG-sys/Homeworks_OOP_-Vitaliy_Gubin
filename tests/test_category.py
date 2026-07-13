@@ -1,5 +1,7 @@
 from unittest.mock import Mock
 
+import pytest
+
 from src.category import Category, init_json_to_category
 from src.product import Product
 
@@ -30,6 +32,12 @@ def test_add_product(category_1: Category, product_1: list[Product], data_from_j
                                    'Iphone 15, 210000.0 руб. Остаток: 8 шт.\n'
                                    'Xiaomi Redmi Note 11, 31000.0 руб. Остаток: 14 шт.\n'
                                    'test_name, 100 руб. Остаток: 3 шт.')
+
+
+def test_add_product_type_error(category_1: Category) -> None:
+    """4.1. Тест метода "add_product" класса Category ошибка TypeError"""
+    with pytest.raises(TypeError):
+        category_1.add_product("invalid_type")
 
 
 def test_init_json_to_category(mock_get_json: Mock, category_1: Category, data_from_json: list[dict]) -> None:

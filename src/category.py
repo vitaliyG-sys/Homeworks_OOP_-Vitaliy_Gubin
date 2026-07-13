@@ -1,19 +1,13 @@
 import os
-from typing import TYPE_CHECKING, Generator
+from typing import Generator
 
 import src
+from src.product import Product
 from src.read_files import get_json_file
-
-if TYPE_CHECKING:
-    from src.product import Product
 
 
 class Category:
     """Представляет категорию товаров."""
-
-    name: str
-    description: str
-    products: list[Product]
 
     category_count = 0
     product_count = 0
@@ -33,14 +27,14 @@ class Category:
 
     def __str__(self) -> str:
         """Метод для вывода общего количества товаров в категории и списка товаров в формате:
-            Название категории, количество продуктов: Х шт."""
+        Название категории, количество продуктов: Х шт."""
         quantity_of_all_goods = sum(product.quantity for product in self.__products)
         return f"{self.name}, количество продуктов: {quantity_of_all_goods}"
 
     @property
     def products(self) -> str:
         """Геттер, который будет выводить список товаров в виде строк в формате:
-            Название продукта, (Стоимость) руб. Остаток: (Количество) шт."""
+        Название продукта, (Стоимость) руб. Остаток: (Количество) шт."""
         product_strings = []
 
         for product in self.__products:
@@ -55,11 +49,13 @@ class Category:
         self.__products = [products]
 
     def add_product(self, product: Product) -> None:
-        """Метод для добавления товаров в категорию. Обновляет счётчик продуктов."""
-        self.__products.append(product)
-        Category.product_count += 1
-
-
+        """Метод для добавления товаров в категорию. Обновляет счётчик продуктов.
+        Исключает возможность добавления других типов данных."""
+        if isinstance(product, Product):
+            self.__products.append(product)
+            Category.product_count += 1
+        else:
+            raise TypeError
 
 
 def init_json_to_category() -> Generator[Category, str | list]:
