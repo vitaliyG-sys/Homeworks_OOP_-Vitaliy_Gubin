@@ -2,6 +2,7 @@ from src.product import Product
 
 
 class Smartphone(Product):
+    """ Класс для продукта "Смартфоны". """
 
     def __init__(
         self,
