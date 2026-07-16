@@ -18,7 +18,7 @@ https://github.com/vitaliyG-sys/Homeworks_OOP_-Vitaliy_Gubin.git
 
 ### модуль main.py
 
-
+Набор кодов из домашнего задания. (текущий - 16.2)
 
 ### модуль category.py
 
@@ -40,6 +40,15 @@ https://github.com/vitaliyG-sys/Homeworks_OOP_-Vitaliy_Gubin.git
 ### модуль category_info.py
 
 1. class CategoryInfo: Итератор, представляет товары из категории.
+
+### модуль base_product.py
+
+1. BaseProduct(ABC): Абстрактный класс для класса Product.
+
+### модуль print_mixin.py
+
+1. PrintMixin: Класс-миксин для класса Product.
+    Выводит в консоль информации какой класс и с какими параметрами был инициализирован.
 
 ### модуль product.py
 
@@ -71,6 +80,14 @@ https://github.com/vitaliyG-sys/Homeworks_OOP_-Vitaliy_Gubin.git
         Создает и возвращает объект класса Product.
 
 2. Генератор init_json_to_product: Генератор для инициализации класса Product.
+
+### модуль products/lawngrass.py
+
+1. LawnGrass(Product): Класс для продукта "Трава газонная".
+
+### модуль products/smartphone.py
+
+1. Smartphone(Product): Класс для продукта "Смартфоны".
 
 ### модуль read_files.py
 
