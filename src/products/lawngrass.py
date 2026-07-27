@@ -1,7 +1,7 @@
 from src.product import Product
 
-
 class LawnGrass(Product):
+    """ Класс для продукта "Трава газонная". """
 
     def __init__(
         self,

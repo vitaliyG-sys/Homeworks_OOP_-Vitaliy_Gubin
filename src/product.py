@@ -1,11 +1,13 @@
 import gc
 import os
 from typing import Generator
+from src.base_product import BaseProduct
+from src.print_mixin import PrintMixin
 
 from src.read_files import get_json_file
 
 
-class Product:
+class Product(BaseProduct, PrintMixin):
     """Представляет продукт из категории товаров."""
 
     def __init__(self, name: str, description: str, price: float, quantity: int) -> None:
@@ -20,13 +22,14 @@ class Product:
         self.description = description
         self.__price = price
         self.quantity = quantity
+        super().__init__()
 
     def __str__(self) -> str:
         """Метод для вывода информации о продукте в формате:
         Название продукта, ХХ руб. Остаток: ХХ шт."""
         return f"{self.name}, {self.__price} руб. Остаток: {self.quantity} шт."
 
-    def __add__(self, other) -> float:
+    def __add__(self, other: Product) -> float:
         """Метод возвращает общую стоимость складываемых продуктов."""
         # Проверка принадлежности к классу добавляемого продукта. Должны совпадать.
         if type(other) is type(self):
@@ -66,7 +69,7 @@ class Product:
     @price.setter
     def price(self, price: float) -> None:
         """Сеттер атрибута price."""
-        v_price = None
+        v_price = 0.0
         if self.__price:
             old_price = self.__price
             v_price = self.verify_price(price, old_price)

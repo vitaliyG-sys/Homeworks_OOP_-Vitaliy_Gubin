@@ -6,6 +6,8 @@ import pytest
 
 from src.category import Category
 from src.product import Product
+from src.products.lawngrass import LawnGrass
+from src.products.smartphone import Smartphone
 
 
 @pytest.fixture
@@ -115,6 +117,31 @@ def product_xiaomi() -> Product:
         price=31000.0,
         quantity=14
     )
+
+@pytest.fixture
+def lawngrass_1() -> LawnGrass:
+    return LawnGrass("Газонная трава",
+                     "Элитная трава для газона",
+                     500.0,
+                     20,
+                     "Россия",
+                     "7 дней",
+                     "Зеленый"
+                     )
+
+
+@pytest.fixture
+def smartphone_1() -> Smartphone:
+    return Smartphone("Samsung Galaxy S23 Ultra",
+                      "256GB,"
+                      " Серый цвет, 200MP камера",
+                      180000.0,
+                      5,
+                      95.5,
+                      "S23 Ultra",
+                      256,
+                      "Серый"
+                      )
 
 @pytest.fixture
 def category_with_products(product_samsung, product_iphone, product_xiaomi) -> Category:
