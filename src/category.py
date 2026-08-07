@@ -57,6 +57,20 @@ class Category:
         else:
             raise TypeError
 
+    def middle_price(self) -> float:
+        """ Метод подсчитывает средний ценник всех товаров.
+        Если в категории нет товаров возвращает 0. """
+        products_price_sum = 0
+        for product in self.__products:
+            products_price_sum += product.price
+
+        try:
+            products_price_sum = round(products_price_sum / len(self.__products), 2)
+            print(f"FuckU{Category.product_count}")
+            return products_price_sum
+        except ZeroDivisionError:
+            return 0
+
 
 def init_json_to_category() -> Generator[Category, str | list]:
     """Генератор для инициализации класса Category из файла "products.json"."""

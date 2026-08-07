@@ -53,3 +53,16 @@ def test_init_json_to_category(mock_get_json: Mock, category_1: Category, data_f
     # Проверка первой категории
     assert categories[0].name == category_1.name
     assert categories[0].description == category_1.description
+
+
+def test_middle_price(category_1) -> None:
+    """ Проверяет работу метода "middle_price". """
+    assert category_1.middle_price() == 140333.33
+
+def test_middle_price_without_products() -> None:
+    """ Проверяет работу метода "middle_price" в категории без продуктов. """
+    category_empty = Category("Пустая категория", "Категория без продуктов", [])
+    # with pytest.raises(ZeroDivisionError):
+    #     category_empty.middle_price()
+    assert category_empty.middle_price() == 0
+

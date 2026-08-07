@@ -246,3 +246,9 @@ def test_new_product_with_no_existing_products(new_product_data: dict) -> None:
     product = Product.new_product(new_product_data)
     assert product.price == new_product_data["price"]
     assert product.quantity == new_product_data["quantity"]
+
+def test_add_product_with_zero_quantity() -> None:
+    """ Проверяет работу класса при попытке добавить товар с нулевым количеством. """
+    with pytest.raises(ValueError, match="Товар с нулевым количеством не может быть добавлен."):
+        Product("Бракованный товар", "Неверное количество", 1000.0, 0)
+
